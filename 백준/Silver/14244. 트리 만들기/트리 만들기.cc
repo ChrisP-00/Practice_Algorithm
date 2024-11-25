@@ -1,22 +1,15 @@
-#include <iostream> 
+#include <stdio.h>
 
-using namespace std; 
-
-int main()
-{
+int main() {
     int n, m;
-    cin >> n >> m;
+    scanf("%d %d", &n, &m);
 
-    int line = n - m;
-
-    for(int i = 0; i < line ; ++i)
-    {
-        cout << i << ' ' << i + 1 << '\n';
+    for (int i = 0; i < n - m; ++i) {
+        printf("%d %d\n", i, i + 1);
     }
 
-    for(int i = line + 1; i < n; ++i)
-    {
-        cout << line << " " << i << '\n'; 
+    for (int i = n - m + 1; i < n; ++i) {
+        printf("%d %d\n", n - m, i);
     }
 
     return 0;
