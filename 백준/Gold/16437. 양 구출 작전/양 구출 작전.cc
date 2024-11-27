@@ -25,11 +25,11 @@ long long dfs(int node)
 
     if(tree[node].type == 'W')
     {
-        total -= tree[node].aniCount;
+        return max(total - tree[node].aniCount, 0LL);
     }
     else
     {
-        total += tree[node].aniCount;
+        return total + tree[node].aniCount;
     }
 
     return max(total, 0LL);
