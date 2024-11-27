@@ -1,54 +1,63 @@
-#include <iostream>
-#include <vector>
-#include <string>
-using namespace std;
+#include <iostream> 
+#include <vector> 
 
-struct Node {
-    char type;        // 'S' for sheep, 'W' for wolf
-    long long count;  // Number of sheep or wolves
-    vector<int> children; // Children of this node
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
+
+using namespace std; 
+
+struct Node
+{
+    char type; 
+    long long aniCount; 
+    vector<int> children; 
 };
 
 vector<Node> tree;
 
-// DFS to calculate the number of sheep that reach the root node
-long long dfs(int node) {
-    long long totalSheep = 0;
+long long dfs(int node)
+{
+    long long total = 0;
 
-    // Traverse all children of the current node
-    for (int child : tree[node].children) {
-        totalSheep += dfs(child); // Add sheep from the child node
+    for(int child : tree[node].children)
+    {
+        total += dfs(child);
     }
 
-    if (tree[node].type == 'S') {
-        totalSheep += tree[node].count; // Add sheep at the current node
-    } else if (tree[node].type == 'W') {
-        totalSheep -= tree[node].count; // Wolves reduce the number of sheep
+    if(tree[node].type == 'W')
+    {
+        total -= tree[node].aniCount;
+    }
+    else
+    {
+        total += tree[node].aniCount;
     }
 
-    // Return only the positive number of sheep
-    return max(0LL, totalSheep);
+    return max(total, 0LL);
 }
 
-int main() {
+int main()
+{
+    fast;
+
     int n;
     cin >> n;
 
     tree.resize(n + 1);
 
-    for (int i = 2; i <= n; ++i) {
-        char type;
-        long long count;
-        int parent;
-        cin >> type >> count >> parent;
+    for(int idx = 2; idx <= n; ++idx)
+    {
+        char t;
+        long long a;
+        int p; 
 
-        tree[i].type = type;
-        tree[i].count = count;
-        tree[parent].children.push_back(i); // Add child to the parent's list
+        cin >> t >> a >> p;
+        
+        tree[idx].type = t;
+        tree[idx].aniCount = a;
+        tree[p].children.push_back(idx);
     }
 
-    // Perform DFS starting from the root node (node 1)
-    cout << dfs(1) << endl;
+    cout << dfs(1) << '\n';
 
     return 0;
 }
