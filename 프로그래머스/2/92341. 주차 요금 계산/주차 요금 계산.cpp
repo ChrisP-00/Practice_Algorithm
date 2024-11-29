@@ -1,66 +1,54 @@
 #include <string>
 #include <vector>
-#include <string>
 #include <sstream>
-#include <map>
-#include <unordered_map>
 #include <cmath>
+#include <map>
+#include <iostream>
 
 using namespace std;
 
-int calculateFee(int time, const vector<int>& fees)
+int stom (string& time)
 {
-    if(time <= fees[0])
-    {
-        return fees[1];
-    }
-    
-    int addTime = time - fees[0];
-    int addFee = ceil((double)addTime / fees[2]) * fees[3];
-    
-    return fees[1] + addFee;
+    int h = (time[0] - '0') * 10 + time[1] - '0';
+    int m = (time[3] - '0') * 10 + time[4] - '0';
+         
+    return h * 60 + m;
 }
 
-
 vector<int> solution(vector<int> fees, vector<string> records) {
+    map<string, vector<int>> cars;
+    
+    for(const string&record : records)
+    {
+        string time, number, status; 
+        stringstream ss (record);
+        ss >> time >> number >> status; 
+        
+        cars[number].push_back(stom(time));
+    }
+    
     vector<int> answer;
     
-    unordered_map<string, int> cars; 
-    map<string, int> parkingFees;
-    
-    for(string s : records)
-    {
-        stringstream ss(s);
-        string time, carNum, status; 
-        ss >> time >> carNum >> status; 
-        
-        int parkingTime = stoi(time.substr(0, 2)) * 60 + stoi(time.substr(3, 2));
-        
-        if(status == "IN")
+    for(auto& car : cars)
+    {      
+        if(car.second.size() % 2 != 0)
         {
-            cars[carNum] = parkingTime;
+            car.second.push_back(1439);
         }
         
-        else if(status == "OUT")
+        int ttl = 0;
+        for(int idx = 1; idx < car.second.size(); idx += 2)
         {
-            if(cars.find(carNum) != cars.end())
-            {
-                int totalTime = parkingTime - cars[carNum];
-                parkingFees[carNum] += totalTime; 
-                cars.erase(carNum);
-            }
+            ttl += car.second[idx] - car.second[idx - 1];
         }
-    }
-    
-    for(const auto& car : cars)
-    {
-        int totalTime = 1439 - car.second; 
-        parkingFees[car.first] += totalTime;
-    }
-    
-    for(const auto fee : parkingFees)
-    {
-        answer.push_back(calculateFee(fee.second, fees));
+        
+        int cost = fees[1];
+        if(ttl - fees[0] > 0)
+        {
+            cost += ceil((double)(ttl - fees[0]) / fees[2]) * fees[3];
+        }
+        
+        answer.push_back(cost);
     }
     
     return answer;
