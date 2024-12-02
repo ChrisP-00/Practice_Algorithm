@@ -18,12 +18,11 @@ long long solution(int cap, int n, vector<int> deliveries, vector<int> pickups) 
         {
             deliverySum -= cap;
             pickupSum -= cap; 
-            count ++;
+            count++;
         }
         
         answer += (i + 1) * 2 * count;
     }
-    
     
     return answer;
 }
