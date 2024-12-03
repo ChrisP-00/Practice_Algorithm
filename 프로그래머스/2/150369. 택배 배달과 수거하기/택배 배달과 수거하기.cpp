@@ -5,24 +5,32 @@ using namespace std;
 
 long long solution(int cap, int n, vector<int> deliveries, vector<int> pickups) {
     long long answer = 0;
-    int deliverySum = 0;
-    int pickupSum = 0;
     
-    for(int i = n - 1; i >= 0; --i)
+    int dw = 0;
+    int pw = 0;
+    int idx = n - 1;
+    
+    while(true)
     {
-        int count = 0;
-        deliverySum += deliveries[i];
-        pickupSum += pickups[i];
-        
-        while(deliverySum > 0 || pickupSum > 0)
+        if(idx < 0)
         {
-            deliverySum -= cap;
-            pickupSum -= cap; 
-            count++;
+            break;
+        }
+        dw += deliveries[idx];
+        pw += pickups[idx];
+        
+        int count = 0;
+        while(dw > 0 || pw > 0)
+        {
+            dw -= cap; 
+            pw -= cap; 
+            count++; 
         }
         
-        answer += (i + 1) * 2 * count;
+        answer += (idx + 1) * 2 * count; 
+        
+        idx--;
     }
     
     return answer;
-}
+} 
