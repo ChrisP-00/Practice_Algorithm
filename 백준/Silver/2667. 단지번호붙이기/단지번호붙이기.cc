@@ -16,7 +16,7 @@ int dfs(int y, int x, vector<vector<int> >& map)
         int ny = y + dir[idx].first;
         int nx = x + dir[idx].second;
 
-        if(ny < 0 || ny >= (int)map.size() || nx < 0 || nx >= map.size())
+        if(ny < 0 || ny >= map.size() || nx < 0 || nx >= map.size())
         {
             continue;
         }
