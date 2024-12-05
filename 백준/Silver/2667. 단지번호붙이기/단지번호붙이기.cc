@@ -31,6 +31,7 @@ int dfs(int y, int x, vector<vector<int> >& map)
     return count;
 }
 
+
 int main()
 {
     int n; 
@@ -49,7 +50,6 @@ int main()
         }
     }
 
-    int count = 0;
     vector<int> answer;
 
     for(int iy = 0; iy < n; ++iy)
@@ -60,14 +60,13 @@ int main()
             {
                 map[iy][ix] = 0;
                 answer.push_back(dfs(iy, ix, map));
-                count++;
             }
         }
     }
 
     sort(answer.begin(), answer.end());
 
-    cout << count << '\n';
+    cout << answer.size() << '\n';
 
     for(int n : answer)
     {
