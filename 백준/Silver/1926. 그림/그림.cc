@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 #define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
@@ -37,7 +36,7 @@ int dfs(int y, int x)
 int main()
 {
     fast;
-    
+
     cin >> n >> m;
 
     for(int iy = 0; iy < n; ++iy)
