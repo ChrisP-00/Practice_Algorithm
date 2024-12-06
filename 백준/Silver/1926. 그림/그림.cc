@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 #define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
@@ -10,28 +11,37 @@ int dirX[4] = {0, 0, 1, -1};
 
 int map[505][505];
 
-int dfs(int y, int x)
+int bfs(int y, int x)
 {
-    int count = 1; 
+    int count = 1;
+    queue<pair<int, int> > q;
+    q.push(make_pair(y, x));
 
-    for(int idx = 0; idx < 4; ++idx)
+    while(!q.empty())
     {
-        int ny = y + dirY[idx];
-        int nx = x + dirX[idx];
+        int y = q.front().first;
+        int x = q.front().second;
+        q.pop();
 
-        if(ny >= 0 && ny < n && nx >= 0 && nx < m)
+        for(int idx = 0; idx < 4; ++idx)
         {
-            if(map[ny][nx] == 1)
+            int ny = y + dirY[idx];
+            int nx = x + dirX[idx];
+
+            if(ny >= 0 && ny < n && nx >= 0 && nx < m)
             {
-                map[ny][nx] = 0;
-                count += dfs(ny, nx);
+                if(map[ny][nx] == 1)
+                {
+                    map[ny][nx] = 0;
+                    q.push(make_pair(ny, nx));
+                    count++;
+                }
             }
         }
     }
 
     return count;
 }
-
 
 int main()
 {
@@ -57,7 +67,7 @@ int main()
             {
                 count++;
                 map[iy][ix] = 0;
-                maxNum = max(maxNum, dfs(iy, ix));
+                maxNum = max(maxNum, bfs(iy, ix));
             }
         }
     }
