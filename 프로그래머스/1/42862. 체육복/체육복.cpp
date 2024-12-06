@@ -9,7 +9,6 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     int answer = 0;
     
     vector<int> counts (32, 0);
-    vector<int> rev = reserve;
     
     for(int n : lost)
     {
@@ -23,20 +22,16 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     
     for(int idx = 0; idx <= n; ++idx)
     {
-        if(counts[idx] != 1)
+        if(counts[idx] == 1)
         {
-            continue;
-        }
-
-        else if(counts[idx - 1] == -1)
-        {
-            counts[idx - 1] = 0;
-            continue; 
-        }
-        else if(counts[idx + 1] == -1)
-        {
-            counts[idx + 1] = 0;
-            continue;
+            if(counts[idx - 1] == -1)
+            {
+                counts[idx - 1] = 0;
+            }
+            else if(counts[idx + 1] == -1)
+            {
+                counts[idx + 1] = 0;
+            }
         }
     }
     
