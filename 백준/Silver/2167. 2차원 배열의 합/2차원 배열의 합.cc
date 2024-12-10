@@ -1,15 +1,14 @@
 #include <iostream> 
-#include <vector>
 
 using namespace std; 
+
+int prefix [305][305];
 
 int main()
 {
     int n, m;
     cin >> n >> m;
-    
-    vector<vector<int> > map (302, vector<int>(302, 0));
-    
+     
     for(int iy = 1; iy <= n; ++iy)
     {
         for(int ix = 1; ix <= m; ++ix)
@@ -17,7 +16,7 @@ int main()
             int input; 
             cin >> input; 
  
-            map[iy][ix] = input + map[iy][ix - 1];
+            prefix[iy][ix] = prefix[iy - 1][ix] + prefix[iy][ix - 1] - prefix[iy - 1][ix - 1] + input;
         }
     }
     
@@ -29,14 +28,7 @@ int main()
         int by, bx, ey, ex; 
         cin >> by >> bx >> ey >> ex; 
         
-        int sum = 0;
-        
-        for(int ty = by; ty <= ey; ++ty)
-        {
-            sum += map[ty][ex] - map[ty][bx - 1];
-        }
-        
-        cout << sum << '\n';
+        cout << prefix[ey][ex] - prefix[by - 1][ex] - prefix[ey][bx - 1] + prefix[by - 1][bx - 1] << '\n';
     }
     
     return 0;
