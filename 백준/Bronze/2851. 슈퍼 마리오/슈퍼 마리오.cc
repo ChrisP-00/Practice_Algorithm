@@ -14,16 +14,9 @@ int main()
         
         sum += n;
   
-        if(abs(100 - sum) < abs(100 - maxNum))
+        if(abs(100 - sum) <= abs(100 - maxNum))
         {
             maxNum = sum;
-        }
-        else if(abs(100 - sum) == abs(100 - maxNum))
-        {
-            if(sum > maxNum)
-            {
-                maxNum = sum;
-            }
         }
     }
     
