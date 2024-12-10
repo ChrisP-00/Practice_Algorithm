@@ -1,6 +1,6 @@
 #include <iostream> 
-#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std; 
 
@@ -14,37 +14,31 @@ int main ()
     cin >> n >> x; 
     
     int sum = 0;
+    int maxValue = 0;
+    int count = 1;
+
     for(int idx = 0; idx < n; ++idx)
     {
         cin >> people[idx];
 
-        if(idx < x)
+        sum += people[idx];
+   
+        if(idx >= x - 1)
         {
-            sum += people[idx];
-        }
+            if(sum > maxValue)
+            {
+                maxValue = sum;
+                count = 1;
+            }
+            else if(maxValue == sum)
+            {
+                count++;
+            }
+
+            sum -= people[idx - x + 1];
+        }       
     }
     
-    int maxValue = sum;
-    int count = 1;
-
-    for(int idx = x; idx < n; ++idx)
-    {
-        sum -= people[idx - x];
-        sum += people[idx];
-
-        if(maxValue < sum)
-        {
-            maxValue = sum;
-            count = 1;
-        }
-        
-        else if(maxValue == sum)
-        {
-            count++;
-        }
-
-    }
-
     if(maxValue == 0)
     {
         cout << "SAD";
