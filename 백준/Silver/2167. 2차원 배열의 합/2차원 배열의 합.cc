@@ -3,7 +3,7 @@
 
 using namespace std; 
 
-int prefix [305][305];
+int prefix [302][302];
 
 int main()
 {
