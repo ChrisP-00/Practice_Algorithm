@@ -10,7 +10,7 @@ int main()
 {
     fast; 
     
-    long long n, k;
+    int n, k;
     cin >> n >> k;
     
     for(int idx = 0; idx < n; ++idx)
@@ -21,8 +21,8 @@ int main()
         ice[pos] = value;
     }
 
-    long long maxValue = 0;
-    long long sum = 0;
+    int maxValue = 0;
+    int sum = 0;
     k = 2 * k + 1;
 
     for (int i = 0; i < 1000001; i++)
