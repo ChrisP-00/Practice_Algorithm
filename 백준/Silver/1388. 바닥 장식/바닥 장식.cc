@@ -18,21 +18,11 @@ int main()
         {
             cin >> room[iy][ix];
             
-            if(room[iy][ix] == '-')
+            if(room[iy][ix] == '-' && room[iy][ix - 1] == '-' || room[iy][ix] == '|' && room[iy - 1][ix] == '|')
             {
-                if(room[iy][ix - 1] == '-')
-                {
-                    continue;
-                }
+                continue;
             }
-            else
-            {
-                if(room[iy - 1][ix] == '|')
-                {
-                    continue;
-                }
-            }
-            
+
             sum++;
         }
     }
