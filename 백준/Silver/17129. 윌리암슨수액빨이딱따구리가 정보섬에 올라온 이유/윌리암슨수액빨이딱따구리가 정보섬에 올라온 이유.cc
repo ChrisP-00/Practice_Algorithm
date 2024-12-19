@@ -2,12 +2,14 @@
 #include <vector> 
 #include <queue>
 
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
+
 using namespace std;
 
 int n, m;
 char map [3001][3001];
-bool isVisited[3001][3001];
-vector<pair<int,int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0 , 1}};
+bool isVisited [3001][3001];
+int dir [4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0 , 1}};
 
 int bfs(int y, int x)
 {
@@ -31,8 +33,8 @@ int bfs(int y, int x)
 
             for(int idx = 0; idx < 4; ++idx)
             {
-                int ny = cy + dir[idx].first;
-                int nx = cx + dir[idx].second;
+                int ny = cy + dir[idx][0];
+                int nx = cx + dir[idx][1];
                 
                 if(ny < 0 || ny >= n || nx < 0 || nx >= m || isVisited[ny][nx] || map[ny][nx] == '1')
                 {
@@ -57,6 +59,8 @@ int bfs(int y, int x)
 
 int main()
 {
+    fast;
+
     cin >> n >> m;
     
     pair<int, int> start;
