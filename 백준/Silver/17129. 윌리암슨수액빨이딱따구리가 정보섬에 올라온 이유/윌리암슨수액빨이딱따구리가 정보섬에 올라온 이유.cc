@@ -5,15 +5,15 @@
 using namespace std;
 
 int n, m;
-vector<vector<int>> map;
-vector<pair<int, int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0 , 1}};
+char map [3001][3001];
+bool isVisited[3001][3001];
+vector<pair<int,int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0 , 1}};
 
-void bfs(int y, int x)
+int bfs(int y, int x)
 {
-    int count = 0; 
+    int count = 1; 
     queue<pair<int, int>> q; 
-    vector<vector<bool>> isVisited (n, vector<bool>(m, false));
-    
+  
     q.push({y,x});
     isVisited[y][x] = true;
 
@@ -29,40 +29,35 @@ void bfs(int y, int x)
             int cx = q.front().second;
             q.pop();
 
-            if(map[cy][cx] >= 3 && map[cy][cx] <= 5)
-            {
-                cout << "TAK\n" << count;
-                return;
-            }
-
             for(int idx = 0; idx < 4; ++idx)
             {
                 int ny = cy + dir[idx].first;
                 int nx = cx + dir[idx].second;
                 
-                if(ny < 0 || ny >= n || nx < 0 || nx >= m || isVisited[ny][nx] || map[ny][nx] == 1)
+                if(ny < 0 || ny >= n || nx < 0 || nx >= m || isVisited[ny][nx] || map[ny][nx] == '1')
                 {
                     continue; 
+                }
+
+                if(map[ny][nx] != '0')
+                {
+                    return count;
                 }
 
                 q.push({ny, nx});
                 isVisited[ny][nx] = true;
             }
         }
-
         count++;
-
     }
 
-    cout << "NIE";
+    return -1;
 }
 
 
 int main()
 {
     cin >> n >> m;
-    
-    map.resize(n, vector<int>(m, 0));
     
     pair<int, int> start;
 
@@ -73,16 +68,25 @@ int main()
 
         for(int ix = 0; ix < m; ++ix)
         {
-            map[iy][ix] = s[ix] - '0';
+            map[iy][ix] = s[ix];
 
-            if(map[iy][ix] == 2)
+            if(map[iy][ix] == '2')
             {
                 start = {iy, ix};
             }
         }
     }
 
-    bfs(start.first, start.second);
+    int answer = bfs(start.first, start.second);
     
+    if(answer == -1)
+    {
+        cout << "NIE";
+    }
+    else
+    {
+        cout << "TAK\n" << answer;
+    }
+
     return 0;
 }
