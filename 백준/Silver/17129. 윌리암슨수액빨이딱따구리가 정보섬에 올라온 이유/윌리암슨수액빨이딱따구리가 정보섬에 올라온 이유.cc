@@ -53,7 +53,7 @@ int bfs(int y, int x)
         count++;
     }
 
-    return -1;
+    return 0;
 }
 
 
@@ -83,7 +83,7 @@ int main()
 
     int answer = bfs(start.first, start.second);
     
-    if(answer == -1)
+    if(answer == 0)
     {
         cout << "NIE";
     }
