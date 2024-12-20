@@ -1,6 +1,7 @@
 #include <iostream> 
 #include <queue>
-#include <vector> 
+
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std;
 
@@ -10,8 +11,8 @@ int dirY[4] = {-1, 1, 0, 0};
 int dirX[4] = {0, 0, -1, 1};
 bool isVisited [1001][1001];
 
-vector<vector<int> > map;
-vector<vector<int> > dist;
+int map [1001][1001];
+int dist [1001][1001];
 
 void bfs(int y, int x)
 {
@@ -48,10 +49,9 @@ void bfs(int y, int x)
 
 int main()
 {
+    fast; 
+    
     cin >> n >> m;
-
-    map.resize(n, vector<int>(m, 0));
-    dist.resize(n, vector<int>(m, false));
 
     int by, bx;
 
