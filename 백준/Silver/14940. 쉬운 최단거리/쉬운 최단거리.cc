@@ -1,36 +1,40 @@
 #include <iostream> 
 #include <queue>
+#include <vector>
+#include <tuple>
 
 #define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std;
+using tripleInt = tuple<int, int, int>;
 
 int n, m;
 
 int dirY[4] = {-1, 1, 0, 0};
 int dirX[4] = {0, 0, -1, 1};
-bool isVisited [1001][1001];
 
-int map [1001][1001];
-int dist [1001][1001];
+vector<vector<bool> > isVisited;
+vector<vector<int> > map;
+vector<vector<int> > dist;
 
 void bfs(int y, int x)
 {
-    queue<pair<int, pair<int,int> > > q; 
-    q.push(make_pair(0, make_pair(y, x)));
+    queue<tripleInt> q;
+
+    q.push({0, y, x});
 
     isVisited[y][x] = true;
     dist[y][x] = 0;
 
     while(!q.empty())
     {
-        pair<int, pair<int,int> >  cur = q.front();
+        tripleInt cur = q.front();
         q.pop();
         
         for(int idx = 0; idx < 4; ++idx)
         {
-            int ny = cur.second.first + dirY[idx];
-            int nx = cur.second.second + dirX[idx];
+            int ny = get<1>(cur) + dirY[idx];
+            int nx = get<2>(cur) + dirX[idx];
             
             if(ny < 0 || ny >= n || nx < 0 || nx >= m 
             || isVisited[ny][nx] || map[ny][nx] == 0)
@@ -38,10 +42,9 @@ void bfs(int y, int x)
                 continue;
             }
 
-            dist[ny][nx] = cur.first + 1;
+            dist[ny][nx] = get<0>(cur) + 1;
             isVisited[ny][nx] = true;
-
-            q.push(make_pair(dist[ny][nx], make_pair(ny, nx)));
+            q.push({dist[ny][nx], ny, nx});
         }
     }
 }
@@ -49,9 +52,12 @@ void bfs(int y, int x)
 
 int main()
 {
-    fast; 
-    
+    fast;
     cin >> n >> m;
+
+    map.resize(n, vector<int>(m));
+    dist.resize(n, vector<int>(m));
+    isVisited.resize(n, vector<bool>(m));
 
     int by, bx;
 
