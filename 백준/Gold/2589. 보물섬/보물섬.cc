@@ -1,20 +1,22 @@
 #include <iostream>
 #include <queue>
-#include <vector>
-#include <tuple>
+#include <memory.h>
+
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std; 
+using dii = pair<int, pair<int, int> >;
 
 int n, m;
 char map[51][51];
-vector<vector<bool> > isVisited;
+bool isVisited[51][51];
 int dirY[4] = {-1, 1, 0, 0};
 int dirX[4] = {0, 0, -1, 1};
 
 int bfs(int y, int x)
 {
-    queue<tuple<int, int, int> > q; 
-    q.push(make_tuple(0, y, x));
+    queue<dii> q; 
+    q.push(make_pair(0, make_pair(y, x)));
     isVisited[y][x] = true;
 
     int depth = 0;
@@ -22,17 +24,17 @@ int bfs(int y, int x)
     while(!q.empty())
     {
         int c = q.size();
-        depth = max(depth, get<0>(q.front()));
+        depth = max(depth, q.front().first);
 
         for(int count = 0; count < c; ++count)
         {
-            tuple<int, int, int> cur = q.front();
+            dii cur = q.front();
             q.pop();
 
             for(int idx = 0; idx < 4; ++idx)
             {
-                int ny = get<1>(cur) + dirY[idx];
-                int nx = get<2>(cur) + dirX[idx];
+                int ny = cur.second.first + dirY[idx];
+                int nx = cur.second.second + dirX[idx];
 
                 if(ny < 0 || ny >= n || nx < 0 || nx >= m 
                 || map[ny][nx] == 'W' || isVisited[ny][nx])
@@ -40,7 +42,7 @@ int bfs(int y, int x)
                     continue;
                 } 
 
-                q.push(make_tuple(get<0>(cur) + 1, ny, nx));
+                q.push(make_pair(cur.first + 1, make_pair(ny, nx)));
                 isVisited[ny][nx] = true;
             }
         }
@@ -51,9 +53,8 @@ int bfs(int y, int x)
 
 int main()
 {
+    fast;
     cin >> n >> m;
-
-    isVisited.resize(n, vector<bool>(m));
 
     for(int iy = 0; iy < n; ++iy)
     {
@@ -73,7 +74,7 @@ int main()
         {
             if(map[iy][ix] == 'L')
             {
-                isVisited.assign(n, vector<bool>(m, false));
+                memset(isVisited, false, sizeof(isVisited));
                 maxDist = max(maxDist, bfs(iy, ix));
             }
         }
