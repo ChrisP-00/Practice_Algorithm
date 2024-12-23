@@ -1,6 +1,5 @@
 #include <iostream> 
 #include <queue>
-#include <vector>
 
 #define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
@@ -8,9 +7,9 @@ using namespace std;
 using pos = vector<int>;
 
 int n, m, t;
-vector<pair<int, int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-vector<vector<int>> map;
-vector<vector<bool>> isVisited;
+int dir[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+int map [101][101];
+bool isVisited [101][101];
 
 int bfs()
 {
@@ -27,8 +26,8 @@ int bfs()
 
         for(int idx = 0; idx < 4; ++idx)
         {
-            int ny = cur[0] + dir[idx].first;
-            int nx = cur[1] + dir[idx].second;
+            int ny = cur[0] + dir[idx][0];
+            int nx = cur[1] + dir[idx][1];
 
             if(ny < 0 || ny >= n || nx < 0 || nx >= m 
             || map[ny][nx] == 1 || isVisited[ny][nx])
@@ -56,12 +55,7 @@ int bfs()
         }
     }
 
-    if(sword != 0)
-    {
-        return sword;
-    }
-
-    return 0;
+    return (sword != 0 ? sword : 0);
 }
 
 int main()
@@ -69,9 +63,6 @@ int main()
     fast;
 
     cin >> n >> m >> t;
-
-    map.resize(n, vector<int>(m, 0));
-    isVisited.resize(n, vector<bool>(m, false));
 
     for(int iy = 0; iy < n; ++iy)
     {
