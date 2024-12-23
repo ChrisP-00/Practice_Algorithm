@@ -1,10 +1,11 @@
 #include <iostream> 
 #include <queue>
+#include <array>
 
 #define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std; 
-using pos = vector<int>;
+using pos = array<int, 3>;
 
 int n, m, t;
 int dir[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
@@ -21,13 +22,13 @@ int bfs()
 
     while(!q.empty())
     {
-        pos cur = q.front();
+        auto [y, x, d] = q.front();
         q.pop();
 
-        for(int idx = 0; idx < 4; ++idx)
+        for(auto& [dy, dx] : dir)
         {
-            int ny = cur[0] + dir[idx][0];
-            int nx = cur[1] + dir[idx][1];
+            int ny = y + dy;
+            int nx = x + dx;
 
             if(ny < 0 || ny >= n || nx < 0 || nx >= m 
             || map[ny][nx] == 1 || isVisited[ny][nx])
@@ -37,20 +38,15 @@ int bfs()
             
             if(ny == n - 1 && nx == m - 1)
             {
-                if(sword != 0)
-                {
-                    return min(cur[2] + 1, sword);
-                }
-                
-                return cur[2] + 1;
+                return sword ? min(d + 1, sword) : d + 1;
             }
 
             if(map[ny][nx] == 2)
             {
-                sword = cur[2] + 1 + (n - ny + m - nx - 2);
+                sword = d + 1 + (n - ny - 1) + (m - nx - 1);
             }
 
-            q.push({ny, nx, cur[2] + 1});
+            q.push({ny, nx, d + 1});
             isVisited[ny][nx] = true;
         }
     }
@@ -73,15 +69,7 @@ int main()
     }
 
     int answer = bfs();
-
-    if(answer == 0 || answer > t)
-    {
-        cout << "Fail";
-    }
-    else
-    {
-        cout << answer;
-    }
+    cout << ((answer == 0 || answer > t) ? "Fail" : to_string(answer));
 
     return 0;
 }
