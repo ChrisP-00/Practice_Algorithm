@@ -1,14 +1,13 @@
 #include <iostream> 
-#include <vector>
 
 using namespace std; 
+
+int apt[15][15];
 
 int main()
 {
     int t;
     cin >> t;
-
-    vector<vector<int>> apt (15, vector<int>(15, 0));
 
     for(int j = 1; j < 15; ++j)
     {
