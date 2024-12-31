@@ -1,44 +1,34 @@
 #include <iostream>
-#include <queue>
+
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std; 
 
 int dirY[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
 int dirX[8]  = {0, 0, -1, 1, -1, 1, -1, 1};
 int map[51][51];
+int w, h;
 
-int bfs(int y, int x, int w, int h)
+void dfs(int y, int x)
 {
-    int count = 0;
+    map[y][x] = 0;
 
-    queue<pair<int, int>> q; 
-
-    q.push({y, x});
-
-    while(!q.empty())
+    for(int idx = 0; idx < 8; ++idx)
     {
-        auto[cy, cx] = q.front();
-        q.pop();
+        int ny = y + dirY[idx];
+        int nx = x + dirX[idx];
 
-        for(int idx = 0; idx < 8; ++idx)
+        if(ny < 0 || ny >= h || nx < 0 || nx >= w || map[ny][nx] == 0)
         {
-            int ny = cy + dirY[idx];
-            int nx = cx + dirX[idx];
-
-            if(ny < 0 || ny >= h || nx < 0 || nx >= w || map[ny][nx] == 0)
-            {
-                continue; 
-            }
-
-            q.push({ny, nx});
-            map[ny][nx] = 0;
+            continue; 
         }
-    }
 
-    return count; 
+        map[ny][nx] = 0;
+        dfs(ny, nx);
+    }
 }
 
-int countIsland(int w, int h)
+int countIsland()
 {
     int count = 0;
 
@@ -48,7 +38,7 @@ int countIsland(int w, int h)
         {
             if(map[iy][ix])
             {
-                bfs(iy, ix, w, h);
+                dfs(iy, ix);
                 count++;
             }
         }
@@ -59,9 +49,10 @@ int countIsland(int w, int h)
 
 int main()
 {
+    fast; 
+    
     while(true)
     {
-        int w, h;
         cin >> w >> h;
         
         if(w == 0 && h == 0)
@@ -77,7 +68,7 @@ int main()
             }
         }
 
-        cout << countIsland(w, h) << '\n';
+        cout << countIsland() << '\n';
     }
 
     return 0;
