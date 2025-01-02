@@ -2,8 +2,8 @@
 
 using namespace std; 
 
-int costs[1001][4];
-int dp[1001][4];
+int costs[1000][3];
+int dp[1000][3];
 
 int main()
 {
