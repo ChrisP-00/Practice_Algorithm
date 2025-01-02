@@ -2,12 +2,12 @@
 
 using namespace std; 
 
-int dp[1001][4];
-
 int main()
 {
     int n;
     cin >> n;
+    
+    int dp[1001][4];
     
     for(int idx = 0; idx < n; ++idx)
     {
@@ -24,7 +24,7 @@ int main()
         dp[idx][2] += min(dp[idx - 1][0], dp[idx - 1][1]);
     }
     
-    cout << min({dp[n - 1][0], dp[n - 1][1], dp[n - 1][2]});
+    cout << min(dp[n - 1][0], min(dp[n - 1][1], dp[n - 1][2]));
     
     return 0;
 }
