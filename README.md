@@ -1,5 +1,5 @@
 <a href="https://github.com/devxb/gitanimals">
-  <img src="https://render.gitanimals.org/lines/{username}?pet-id=4" width="1000" height="120"/>
+  <img src="https://render.gitanimals.org/lines/{ChrisP-00}?pet-id=4" width="1000" height="120"/>
 </a>
 
 # Practice_Algorithm
