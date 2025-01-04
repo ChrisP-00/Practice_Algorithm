@@ -1,10 +1,11 @@
 #include <iostream>
-#include <algorithm>
 
 using namespace std;
 
-int nums[1001];
-int dp[1001] = {1};
+int max (int a, int b)
+{
+    return (a > b ? a : b);
+}
 
 int main()
 {
@@ -15,25 +16,33 @@ int main()
     int n;
     cin >> n;
 
+    int* nums = new int[n];
+    int* dp = new int[n];
+
     for(int idx = 0; idx < n; ++idx)
     {
         cin >> nums[idx];
+        dp[idx] = 1;
     }
 
-    fill(dp, dp + n, 1);
+    int ans = 1;
 
     for(int i = 1; i < n; ++i)
     {
         for(int j = 0; j < i; ++j)
         {
-            if(nums[j] < nums[i])
+            if(nums[j] < nums[i] & dp[j] >= dp[i])
             {
-                dp[i] = max(dp[i], dp[j] + 1);
+                dp[i] = dp[j] + 1;
+                ans = max(dp[i], ans);
             }
         }
     }
     
-    cout << *max_element(dp, dp + n);
+    cout << ans;
+
+    delete[] nums;
+    delete[] dp;
 
     return 0;
 }
