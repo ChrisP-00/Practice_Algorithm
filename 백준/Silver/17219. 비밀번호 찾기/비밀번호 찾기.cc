@@ -1,31 +1,28 @@
 #include <iostream>
 #include <unordered_map>
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std; 
 
 int main()
 {
-    ios::sync_with_stdio(false), cin.tie(NULL);
+    fast; 
     
-    unordered_map<string, string> passwords;
     int ws, pw;
-    
     cin >> ws >> pw; 
     
+    unordered_map<string, string> passwords;
+    string temp1, temp2;
     for(int idx = 0; idx < ws; ++idx)
     {
-        string a, b; 
-        cin >> a >> b;
-        
-        passwords[a] = b;
+        cin >> temp1 >> temp2;
+        passwords[temp1] = temp2;
     }
     
     for(int idx = 0; idx < pw; ++idx)
     {
-        string input; 
-        cin >> input; 
-        
-        cout << passwords[input] << '\n';
+        cin >> temp1; 
+        cout << passwords[temp1] << '\n';
     }
         
     return 0;
