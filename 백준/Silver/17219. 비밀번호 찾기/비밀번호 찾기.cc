@@ -1,12 +1,11 @@
 #include <iostream>
 #include <unordered_map>
-#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std; 
 
 int main()
 {
-    fast; 
+    ios::sync_with_stdio(false), cin.tie(NULL);
     
     unordered_map<string, string> passwords;
     int ws, pw;
