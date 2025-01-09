@@ -2,10 +2,14 @@
 #include <unordered_map>
 #include <queue>
 
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
+
 using namespace std;
 
 int main()
 {
+    fast;
+
     int qc;
     cin >> qc;
     
@@ -40,7 +44,7 @@ int main()
                 {
                     break;
                 }
-                
+
                 ans += gorilla[name].top();
                 gorilla[name].pop();
             }
