@@ -29,8 +29,8 @@ int main()
         return a.size() < b.size();    
     });
 
-    unordered_map<string, int> wMap;
-    wMap[word] = 1;
+    unordered_map<string, bool> wMap;
+    wMap[word] = true;
     string maxWord = word;
 
     for(const string& curWord : words)
@@ -40,11 +40,11 @@ int main()
             string shorten = curWord; 
             shorten.erase(shorten.begin() + idx);
 
-            if(wMap.count(shorten) > 0)
+            if(wMap.count(shorten) > 0 && wMap[shorten])
             {
-                wMap[curWord] = max(wMap[curWord], wMap[shorten] + 1);
-            
-                if(wMap[curWord] > wMap[maxWord])
+                wMap[curWord] = true;
+
+                if(curWord.size() > maxWord.size())
                 {
                     maxWord = curWord;
                 }
