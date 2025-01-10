@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <unordered_map>
+#include <unordered_set>
 #include <algorithm>
 
 #define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
@@ -29,8 +29,8 @@ int main()
         return a.size() < b.size();    
     });
 
-    unordered_map<string, bool> wMap;
-    wMap[word] = true;
+    unordered_set<string> wSet;
+    wSet.insert(word);
     string maxWord = word;
 
     for(const string& curWord : words)
@@ -40,14 +40,15 @@ int main()
             string shorten = curWord; 
             shorten.erase(shorten.begin() + idx);
 
-            if(wMap.count(shorten) > 0 && wMap[shorten])
+            if(wSet.count(shorten))
             {
-                wMap[curWord] = true;
+                wSet.insert(curWord);
 
                 if(curWord.size() > maxWord.size())
                 {
                     maxWord = curWord;
                 }
+                break;
             }
         }  
     }
