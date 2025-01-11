@@ -1,41 +1,35 @@
 #include <iostream>
-#include <unordered_map>
-
+#include <algorithm>
 #define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std;
 
-
 int main()
 {
     fast;
+    int nums[100001];
     int n;
     cin >> n;
 
-    unordered_map<int, bool> map;
-    while(n--)
+    for(int idx = 0; idx < n; ++idx)
     {
-        int num;
-        cin >> num;
-        map[num] = true;
+        cin >> nums[idx];
     }
 
-    int m;
+    sort(nums, nums + n);
+
+    int m, num;
     cin >> m;
     while(m--)
     {
-        int num;
         cin >> num;
-        if(map.count(num) > 0)
+        if(upper_bound(nums, nums + n, num) - lower_bound(nums, nums + n, num) == 0)
         {
-            if(map[num])
-            {
-                cout << 1 << '\n';
-            }
+            cout << 0 << '\n';
         }
         else
         {
-            cout << 0 << '\n';
+            cout << 1 << '\n';
         }
     }
 
