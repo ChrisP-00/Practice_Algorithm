@@ -1,20 +1,21 @@
 #include <iostream>
 #include <vector>
-#include <string>
 #include <algorithm>
+
+#define fast ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 
 using namespace std;
 
 struct person
 {
     int age;
-    string name;
+    char name[101];
     int idx;
 };
 
-
 int main()
 {
+    fast;
     int n; 
     cin >> n;
 
