@@ -22,11 +22,8 @@ int main()
 
     for(int idx = 0; idx < n; ++idx)
     {
-        int a;
-        string name;
-        cin >> a >> name;
-
-        people[idx] = {a, name, idx};
+        cin >> people[idx].age >> people[idx].name;
+        people[idx].idx = idx;
     }
 
     sort(people.begin(), people.end(), [](const person &a, const person &b)
