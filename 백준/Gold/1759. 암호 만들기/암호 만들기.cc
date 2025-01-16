@@ -1,6 +1,5 @@
 #include <iostream> 
 #include <vector> 
-#include <string>
 #include <algorithm>
 
 using namespace std;
@@ -8,50 +7,53 @@ using namespace std;
 int l, c;
 vector<char> alphabets;
 vector<string> ans;
+char current[16];
+int vowelCount = 0, consonantCount = 0;
 
-bool isAcceptable(string &s)
+bool isVowel(char ch)
 {
-    int vowels = 0, consonants = 0;
-    
-    for(const char ch : s)
-    {
-        if(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')
-        {
-            vowels++;
-        }
-        else
-        {
-            consonants++;
-        }
-    }
-
-    return vowels >= 1 && consonants >= 2;
+    return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u';
 }
 
 
-
-void makeCode(string word, int idx)
+void makeCode(int wordLength, int idx)
 {
-    if(word.size() == l)
+    if(wordLength == l)
     {
-        if(isAcceptable(word))
+        if(vowelCount >= 1 && consonantCount >= 2)
         {
-            ans.push_back(word);
+            ans.push_back(string(current, l));
         }
         return;
     }
     
     for(int i = idx; i < c; ++i)
     {
-        makeCode(word + alphabets[i], i + 1);
+        current[wordLength] = alphabets[i];
+        if(isVowel(alphabets[i]))
+        {
+            vowelCount++;
+        }
+        else
+        {
+            consonantCount++;
+        }
+
+        makeCode(wordLength + 1, i + 1);
+
+        if(isVowel(alphabets[i]))
+        {
+            vowelCount--;
+        }
+        else
+        {
+            consonantCount--;
+        }
     }
 }
 
 int main()
 {
-    ios::sync_with_stdio(false); 
-    cin.tie(NULL);
-    
     cin >> l >> c;
     
     alphabets.resize(c);
@@ -61,7 +63,8 @@ int main()
     }
     
     sort(alphabets.begin(), alphabets.end());
-    makeCode("", 0);
+    
+    makeCode(0, 0);
 
     for(const string& s : ans)
     {
