@@ -31,10 +31,10 @@ pair<int, int> whoSurvive(int y, int x)
         auto[cy, cx] = q.front();
         q.pop();
         
-        for(const auto& d : dir)
+        for(const auto& [dy, dx] : dir)
         {
-            int ny = cy + d.first;
-            int nx = cx + d.second;
+            int ny = cy + dy;
+            int nx = cx + dx;
             if(ny < 0 || ny >= n || nx < 0 || nx >= m 
                || map[ny][nx] == '#' || isVisited[ny][nx])
             {
