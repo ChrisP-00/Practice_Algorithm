@@ -20,7 +20,6 @@ void whoSurvive(int y, int x, int& s, int& w)
     }
     
     map[y][x] = '#';
-       
     for(int dir = 0; dir < 4; ++dir)
     {
         int ny = y + dirY[dir];
@@ -29,13 +28,14 @@ void whoSurvive(int y, int x, int& s, int& w)
         {
             continue; 
         }
-        
         whoSurvive(ny, nx, s, w);
     }
 }
 
 int main()
 {
+    ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    
     cin >> n >> m;
     for(int iy = 0; iy < n; iy++)
     {
@@ -49,7 +49,7 @@ int main()
     {
         for(int ix = 0; ix < m; ++ix)
         {
-            if(map[iy][ix] != '.' && map[iy][ix] != '#')
+            if(map[iy][ix] != '#')
             {
                 int s = 0, w = 0;
                 whoSurvive(iy, ix, s, w);
