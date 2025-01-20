@@ -1,15 +1,22 @@
 #include <iostream> 
+#include <queue>
+#include <vector>
 
 using namespace std; 
 
-char map[251][251];
-int dirY[4] = {-1, 1, 0, 0};
-int dirX[4] = {0, 0, -1, 1};
+vector<vector<char>> map;
+vector<vector<bool>> isVisited;
+vector<pair<int, int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 int n, m;
 int sheep = 0, wolf = 0;
 
-void whoSurvive(int y, int x, int& s, int& w)
+pair<int, int> whoSurvive(int y, int x)
 {
+    int s = 0, w = 0;
+    queue<pair<int, int>> q; 
+    q.push({y, x});
+    isVisited[y][x]  = true;
+
     if(map[y][x] == 'v')
     {
         w++;
@@ -18,18 +25,35 @@ void whoSurvive(int y, int x, int& s, int& w)
     {
         s++;
     }
-    
-    map[y][x] = '#';
-    for(int dir = 0; dir < 4; ++dir)
+
+    while(!q.empty())
     {
-        int ny = y + dirY[dir];
-        int nx = x + dirX[dir];
-        if(ny < 0 || ny >= n || nx < 0 || nx >= m || map[ny][nx] == '#')
+        auto[cy, cx] = q.front();
+        q.pop();
+        
+        for(const auto& d : dir)
         {
-            continue; 
-        }
-        whoSurvive(ny, nx, s, w);
+            int ny = cy + d.first;
+            int nx = cx + d.second;
+            if(ny < 0 || ny >= n || nx < 0 || nx >= m 
+               || map[ny][nx] == '#' || isVisited[ny][nx])
+            {
+                continue; 
+            }
+            
+            isVisited[ny][nx] = true;
+            q.push({ny, nx});            
+            if(map[ny][nx] == 'v')
+            {
+                w++;
+            }
+            else if(map[ny][nx] == 'k')
+            {
+                s++;
+            }
+        }    
     }
+    return {s, w};
 }
 
 int main()
@@ -37,6 +61,9 @@ int main()
     ios::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
     
     cin >> n >> m;
+    map.resize(n, vector<char>(m));
+    isVisited.resize(n, vector<bool>(m, false));
+    
     for(int iy = 0; iy < n; iy++)
     {
         for(int ix = 0; ix < m; ++ix)
@@ -49,10 +76,9 @@ int main()
     {
         for(int ix = 0; ix < m; ++ix)
         {
-            if(map[iy][ix] != '#')
+            if(!isVisited[iy][ix] && map[iy][ix] != '#')
             {
-                int s = 0, w = 0;
-                whoSurvive(iy, ix, s, w);
+                auto[s, w] = whoSurvive(iy, ix);
                 
                 if(s > w)
                 {
