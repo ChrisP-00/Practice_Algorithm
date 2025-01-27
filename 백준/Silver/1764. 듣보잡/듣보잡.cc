@@ -1,5 +1,7 @@
 #include <iostream>
-#include <map>
+#include <unordered_set>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,24 +11,31 @@ int main() {
     int see, listen; 
     cin >> see >> listen;
 
-    map<string, int> noSeeNoListen;
-    int count = 0;
-    for(int i = 0; i < see + listen; ++i) {
+    unordered_set<string> mySet;
+    vector<string> noSeeNoListen;
+
+    while(see--) {
         string s;
         cin >> s;
-        noSeeNoListen[s]++;
 
-        if(noSeeNoListen[s] > 1) {
-            count++;
+        mySet.insert(s);
+    }
+
+    while(listen--) {
+        string s;
+        cin >> s;
+
+        if(mySet.find(s) != mySet.end()) {
+            noSeeNoListen.push_back(s);
         }
     }
 
-    cout << count << '\n';
+    sort(noSeeNoListen.begin(), noSeeNoListen.end());
 
-    for(auto&[a, b] : noSeeNoListen) {
-        if(b > 1) {
-            cout << a << '\n';
-        }
+    cout << noSeeNoListen.size() << '\n';
+
+    for(auto name : noSeeNoListen) {
+        cout << name << '\n';    
     }
 
     return 0;
