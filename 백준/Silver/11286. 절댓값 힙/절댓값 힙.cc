@@ -1,14 +1,17 @@
 #include <iostream> 
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
-typedef long long ll;
+class comp {
+    public:
+    bool operator()(int a, int b) {
+        if(abs(a) == abs(b)) return a > b;
+        return abs(a) > abs(b);
+    }
+};
 
-ll absolute(ll a)
-{
-    return (a > 0) ? a : -a;
-}
 
 int main()
 {
@@ -17,26 +20,20 @@ int main()
     int n;
     cin >> n;
     
-
-    priority_queue<pair<ll,ll>, vector<pair<ll, ll> >, greater<pair<ll, ll> > > pq;
-    while(n--)
-    {
-        ll num;
+    priority_queue<int, vector<int>, comp > pq;
+    while(n--) {
+        int num;
         cin >> num;
 
-        if(num != 0)
-        {
-            pq.push({absolute(num), num});
+        if(num != 0) {
+            pq.push(num);
         }
-        else
-        {
-            if(!pq.empty())
-            {
-                cout << pq.top().second << '\n';
+        else {
+            if(!pq.empty()) {
+                cout << pq.top() << '\n';
                 pq.pop();
             }
-            else
-            {
+            else {
                 cout << "0\n";
             }
         }
