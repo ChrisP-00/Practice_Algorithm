@@ -1,15 +1,13 @@
-#include <string>
+#include <numeric>
 #include <vector>
 
 using namespace std;
 
-int solution(int a, int d, vector<bool> included) {
-    int answer = 0;
-
-    for(int i = 0; i < included.size(); ++i)
-    {
-        if(included[i]) answer += a + d * i;
-    }
-    
-    return answer;
+int solution(int a, int d, vector<bool> v) {
+    int i = 0;
+    return accumulate(v.begin(), v.end(), 0, [&](int sum, bool flag) {
+        int result = flag ? a + d * i : 0;
+        ++i;
+        return sum + result;
+    });
 }
