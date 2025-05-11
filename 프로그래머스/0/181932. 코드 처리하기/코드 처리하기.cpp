@@ -9,7 +9,7 @@ string solution(string code) {
     
     for(int i = 0; i < code.length(); ++i)
     {
-        if((code[i] - '0') < 2)
+        if(code[i] <= '1')
         {
             mode ^= code[i] - '0';
             continue;
